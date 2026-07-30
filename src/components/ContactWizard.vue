@@ -132,7 +132,7 @@ async function submitS1() {
         email: s1.value.email.trim(),
         phone,
         companyName: s1.value.company.trim(),
-        source: 'bakano-web',
+        source: 'EAT-web',
         tags: ['web-lead'],
         event_id: regEventId,
         ...getStoredFbParams(),
@@ -141,7 +141,7 @@ async function submitS1() {
     // Meta Pixel — CompleteRegistration: señal de volumen para el algoritmo
     // Se dispara para TODO contacto que completa Step 1, sin importar calificación
     ;(window as any).fbq?.('track', 'CompleteRegistration',
-      { content_name: 'contacto-web-bakano', value: 1, currency: 'USD' },
+      { content_name: 'contacto-web-eat', value: 1, currency: 'USD' },
       { eventID: regEventId },
     )
     dir.value = 'fwd'

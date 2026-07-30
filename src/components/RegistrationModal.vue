@@ -225,13 +225,13 @@ const handleSubmit = async () => {
     notas: buildNote(form.value, selectedCountry.value.name, pageDur),
     nota: buildNote(form.value, selectedCountry.value.name, pageDur),
     pageDuration: pageDur,
-    source: 'LINEA-VIVA-web',
+    source: 'EAT-web',
     timestamp: new Date().toISOString(),
     event_id: leadEventId,
     ...getStoredFbParams(),
   }
 
-  console.info('[LINEA VIVA Registro]', payload)
+  console.info('[EAT Registro]', payload)
 
   const webhookUrl = import.meta.env.VITE_WEBHOOK_REGISTRO ?? 'https://services.leadconnectorhq.com/hooks/kU4URJgWDNYci1iLXzD8/webhook-trigger/u8Vy6B5d6kw7lZqNjJ9Z'
   await fetch(webhookUrl, {
