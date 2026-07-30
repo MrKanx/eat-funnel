@@ -175,6 +175,17 @@ const isFresh = (key: string, ttl: number): boolean => {
   return false
 }
 
+const hasContact = (): boolean => {
+  try {
+    const raw = safeLocalStorage.getItem('os_contact')
+    if (!raw) return false
+    const parsed = JSON.parse(raw)
+    return !!(parsed.email || parsed.nombre)
+  } catch {
+    return false
+  }
+}
+
 const PUBLIC_ROUTES = ['privacy-policy', 'legal-notice']
 
 router.beforeEach((to, from, next) => {
@@ -184,21 +195,32 @@ router.beforeEach((to, from, next) => {
 
   const bookedFresh = isFresh('os_booked_at', BOOKED_TTL_MS)
   const disqFresh   = isFresh('os_disq_at',   DISQ_TTL_MS)
+  const leadRegistered = hasContact()
 
-  if (routeName === 'booked') {
-    if (!bookedFresh && !import.meta.env.DEV) return next({ name: 'funnel' })
+  // 1. Si ya agendó cita en los últimos 3 días -> forzar /cita-confirmada
+  if (bookedFresh) {
+    if (routeName !== 'booked') return next({ name: 'booked' })
     return next()
   }
 
-  if (bookedFresh && !import.meta.env.DEV) {
-    return next({ name: 'booked' })
+  // 2. Si está descalificado en las últimas 48 horas -> forzar /sin-espacio
+  if (disqFresh) {
+    if (routeName !== 'no-space') return next({ name: 'no-space' })
+    return next()
   }
 
-  if (disqFresh && ['booking', 'booked'].includes(routeName) && !import.meta.env.DEV) {
-    return next({ name: 'no-space' })
+  // 3. Si intenta acceder a /cita-confirmada sin tener cita agendada -> redirigir a /
+  if (routeName === 'booked' && !bookedFresh) {
+    return next({ name: 'funnel' })
   }
 
-  if (routeName === 'no-space' && !disqFresh && !import.meta.env.DEV) {
+  // 4. Si intenta acceder a /sin-espacio sin estar descalificado -> redirigir a /
+  if (routeName === 'no-space' && !disqFresh) {
+    return next({ name: 'funnel' })
+  }
+
+  // 5. Si intenta acceder a /ver-video o /agendar sin haber registrado sus datos de contacto -> redirigir a /
+  if (['video', 'booking'].includes(routeName) && !leadRegistered) {
     return next({ name: 'funnel' })
   }
 
