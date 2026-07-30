@@ -109,6 +109,12 @@ const errors = ref<Record<string, string>>({})
 const touched = ref<Record<string, boolean>>({})
 
 // ── Phone ──────────────────────────────────────────────────────────────────────
+const phoneCleanDigits = computed(() => {
+  const raw = form.value.phone.replace(/\D/g, '')
+  if (raw.startsWith('0')) return raw.slice(1)
+  return raw
+})
+
 const formattedPhone = computed(() => {
   if (!form.value.phone) return ''
   const formatter = new AsYouType(selectedCountry.value.code as any)
@@ -116,15 +122,20 @@ const formattedPhone = computed(() => {
 })
 
 const phoneValid = computed(() => {
-  const full = selectedCountry.value.dial + form.value.phone.replace(/\s/g, '')
+  const digits = phoneCleanDigits.value
+  if (!digits) return false
+  const full = selectedCountry.value.dial + digits
   const parsed = parsePhoneNumberFromString(full, selectedCountry.value.code as any)
-  return parsed?.isValid() ?? false
+  if (parsed?.isValid()) return true
+  return digits.length >= 7 && digits.length <= 15
 })
 
 const parsedPhoneE164 = computed(() => {
-  const full = selectedCountry.value.dial + form.value.phone.replace(/\s/g, '')
+  const digits = phoneCleanDigits.value
+  const full = selectedCountry.value.dial + digits
   const parsed = parsePhoneNumberFromString(full, selectedCountry.value.code as any)
-  return parsed?.format('E.164') ?? ''
+  if (parsed?.isValid()) return parsed.format('E.164')
+  return `${selectedCountry.value.dial}${digits}`
 })
 
 // ── Page timer ─────────────────────────────────────────────────────────────────
@@ -148,7 +159,7 @@ const validators: Record<string, (v: string) => string | null> = {
   nombre: v => v.trim().length < 2 ? 'Ingresa tu nombre' : null,
   apellido: v => v.trim().length < 2 ? 'Ingresa tu apellido' : null,
   email: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) ? null : 'Email inválido',
-  phone: () => phoneValid.value ? null : 'Número inválido para el país seleccionado',
+  phone: () => phoneValid.value ? null : 'Ingresa un teléfono válido',
   empresa: v => v.trim().length < 2 ? 'Ingresa el nombre de tu empresa' : null,
   urgencia: v => !v ? 'Selecciona la urgencia' : null,
 }
@@ -616,13 +627,14 @@ $accent: colors.$S2M-GOLD;
     &:focus { border-color: rgba($accent, 0.5); background: rgba($accent, 0.04); box-shadow: 0 0 0 3px rgba($accent, 0.08); }
   }
 
-  &.has-error input { border-color: rgba(255, 80, 100, 0.5); }
+  &.has-error input { border-color: rgba(225, 29, 72, 0.4); }
 }
 
 .rmodal__error {
   font-family: fonts.$font-interface;
   font-size: 0.72rem;
-  color: #ff6680;
+  color: #E11D48;
+  font-weight: 500;
 }
 
 .rmodal__phone-wrap {
@@ -636,7 +648,7 @@ $accent: colors.$S2M-GOLD;
   overflow: visible;
   transition: border-color 0.2s, box-shadow 0.2s;
   &:focus-within { border-color: rgba($accent, 0.5); box-shadow: 0 0 0 3px rgba($accent, 0.08); }
-  .has-error & { border-color: rgba(255, 80, 100, 0.5); }
+  .has-error & { border-color: rgba(225, 29, 72, 0.4); }
 }
 
 .rmodal__country-trigger {

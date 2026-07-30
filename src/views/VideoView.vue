@@ -650,12 +650,13 @@ onUnmounted(() => { if (timer) clearInterval(timer) })
   }
 
   &.error input {
-    border-color: colors.$OS-RED;
+    border-color: rgba(225, 29, 72, 0.4);
   }
 
   &__error {
     font-size: 0.75rem;
-    color: colors.$OS-RED;
+    color: #E11D48;
+    font-weight: 500;
   }
 }
 
