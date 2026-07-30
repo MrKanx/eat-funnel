@@ -6,6 +6,9 @@ import LegalNoticeView from '../views/LegalNoticeView.vue'
 import BookingView from '../views/BookingView.vue'
 import BookedView from '../views/BookedView.vue'
 import NoSpaceView from '../views/NoSpaceView.vue'
+import { captureFbParams } from '@/utils/fbclid'
+import { safeLocalStorage } from '@/utils/storage'
+
 
 import 'vue-router'
 
@@ -158,7 +161,7 @@ const BOOKED_TTL_MS = 3 * 24 * 60 * 60 * 1000
 const DISQ_TTL_MS   = 48 * 60 * 60 * 1000
 
 const readTimestamp = (key: string): number | null => {
-  const raw = localStorage.getItem(key)
+  const raw = safeLocalStorage.getItem(key)
   if (!raw) return null
   const n = Number(raw)
   return Number.isFinite(n) && n > 0 ? n : null
@@ -168,13 +171,14 @@ const isFresh = (key: string, ttl: number): boolean => {
   const ts = readTimestamp(key)
   if (ts === null) return false
   if (Date.now() - ts <= ttl) return true
-  localStorage.removeItem(key)
+  safeLocalStorage.removeItem(key)
   return false
 }
 
 const PUBLIC_ROUTES = ['privacy-policy', 'legal-notice']
 
 router.beforeEach((to, from, next) => {
+  captureFbParams()
   const routeName = to.name as string
   if (PUBLIC_ROUTES.includes(routeName)) return next()
 

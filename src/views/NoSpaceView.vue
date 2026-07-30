@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { safeLocalStorage } from '@/utils/storage'
+
 
 const COOLDOWN_MS = 48 * 60 * 60 * 1000
 
@@ -7,14 +9,14 @@ const hoursLeft = ref(0)
 
 const contactName = computed(() => {
   try {
-    const stored = localStorage.getItem('os_contact')
+    const stored = safeLocalStorage.getItem('os_contact')
     if (!stored) return ''
     return JSON.parse(stored).nombre ?? ''
   } catch { return '' }
 })
 
 onMounted(() => {
-  const osDisqAt = localStorage.getItem('os_disq_at')
+  const osDisqAt = safeLocalStorage.getItem('os_disq_at')
   if (osDisqAt) {
     const elapsed = Date.now() - Number(osDisqAt)
     const remaining = COOLDOWN_MS - elapsed

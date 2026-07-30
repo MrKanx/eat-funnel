@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { safeLocalStorage, safeSessionStorage } from '@/utils/storage'
+
 
 const contactName = computed(() => {
   try {
-    const stored = localStorage.getItem('os_contact')
+    const stored = safeLocalStorage.getItem('os_contact')
     if (!stored) return ''
     const rawName = JSON.parse(stored).nombre ?? ''
     if (!rawName) return ''
@@ -18,20 +20,20 @@ const contactName = computed(() => {
 
 const RETURNING_THRESHOLD_MS = 10 * 60 * 1000
 const isReturningVisitor = computed(() => {
-  const ts = Number(localStorage.getItem('os_booked_at') ?? 0)
+  const ts = Number(safeLocalStorage.getItem('os_booked_at') ?? 0)
   if (!ts) return false
   return Date.now() - ts > RETURNING_THRESHOLD_MS
 })
 
 onMounted(() => {
-  const alreadyFired = sessionStorage.getItem('os_complete_fired')
+  const alreadyFired = safeSessionStorage.getItem('os_complete_fired')
   if (!alreadyFired) {
     ; (window as any).fbq?.('track', 'CompleteRegistration', {
       content_name: 'diagnostico-agendado',
       value: 1,
       currency: 'USD',
     })
-    sessionStorage.setItem('os_complete_fired', '1')
+    safeSessionStorage.setItem('os_complete_fired', '1')
   }
 })
 

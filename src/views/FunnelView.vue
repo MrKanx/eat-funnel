@@ -3,6 +3,8 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import RegistrationModal from '@/components/RegistrationModal.vue'
 
+import { safeSessionStorage } from '@/utils/storage'
+
 const router = useRouter()
 const isModalOpen = ref(false)
 
@@ -15,7 +17,7 @@ const closeModal = () => {
 }
 
 onMounted(() => {
-  sessionStorage.setItem('alu_page_entry', String(Date.now()))
+  safeSessionStorage.setItem('alu_page_entry', String(Date.now()))
   
   // Clean up any other bg
   document.body.style.backgroundColor = '#F9FAFB'
@@ -169,6 +171,8 @@ onMounted(() => {
 
 .funnel {
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   background-color: colors.$QS-LIGHT;
   color: colors.$QS-DARK;
   font-family: fonts.$font-secondary;
@@ -182,12 +186,20 @@ onMounted(() => {
   max-width: 1000px;
   padding: 0 20px;
   flex: 1;
+
+  @media (max-width: 480px) {
+    padding: 0 12px;
+  }
 }
 
 .funnel__header {
   display: flex;
   justify-content: center;
   padding: 2rem 0 1rem;
+
+  @media (max-width: 480px) {
+    padding: 1rem 0 0.5rem;
+  }
 }
 
 .funnel__logo-text {
@@ -196,6 +208,10 @@ onMounted(() => {
   font-weight: 900;
   color: colors.$QS-DARK;
   letter-spacing: -0.5px;
+
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
+  }
 }
 
 .funnel__logo-accent {
@@ -205,16 +221,29 @@ onMounted(() => {
 .funnel__hero {
   text-align: center;
   margin-top: 1rem;
+
+  @media (max-width: 480px) {
+    margin-top: 0.25rem;
+  }
 }
 
 .funnel__headline {
   font-family: fonts.$font-principal;
-  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-size: clamp(1.3rem, 6vw, 3.5rem);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.25;
   color: colors.$QS-DARK;
   margin-bottom: 1rem;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+
+  @media (max-width: 480px) {
+    font-size: clamp(1.2rem, 5.6vw, 1.55rem);
+    line-height: 1.25;
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.3px;
+  }
 }
 
 .funnel__headline-accent {
@@ -227,6 +256,12 @@ onMounted(() => {
   max-width: 700px;
   margin: 0 auto 2.5rem;
   line-height: 1.5;
+
+  @media (max-width: 480px) {
+    font-size: 0.88rem;
+    line-height: 1.45;
+    margin: 0 auto 1.25rem;
+  }
 }
 
 .funnel__content-grid {
@@ -238,6 +273,12 @@ onMounted(() => {
 
   @media (max-width: 850px) {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    .funnel__vsl-column {
+      order: -1;
+      width: 100%;
+    }
   }
 }
 
@@ -303,6 +344,13 @@ onMounted(() => {
   cursor: pointer;
   transition: all 0.3s;
   margin-bottom: 1rem;
+
+  @media (max-width: 480px) {
+    width: 50px;
+    height: 50px;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .funnel__vsl-msg {
@@ -312,21 +360,32 @@ onMounted(() => {
   color: #fff;
   letter-spacing: 1px;
   text-transform: uppercase;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.65);
   padding: 4px 12px;
   border-radius: 20px;
+  text-align: center;
+  max-width: 90%;
+  word-wrap: break-word;
+
+  @media (max-width: 480px) {
+    font-size: 0.68rem;
+    letter-spacing: 0.3px;
+    padding: 3px 8px;
+  }
 }
 
 .funnel__cta {
   margin-top: 2rem;
   width: 100%;
+  min-height: 52px;
+  touch-action: manipulation;
   background: colors.$S2M-GOLD;
   color: colors.$QS-SURFACE;
   font-family: fonts.$font-accent;
   font-size: 1.1rem;
   font-weight: 800;
   text-transform: uppercase;
-  padding: 18px 30px;
+  padding: 16px 24px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -336,11 +395,24 @@ onMounted(() => {
   gap: 12px;
   box-shadow: 0 10px 20px rgba(colors.$S2M-GOLD, 0.2);
   transition: all 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
 
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 15px 30px rgba(colors.$S2M-GOLD, 0.4);
     background: #FFD25B;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 1rem;
+    padding: 12px 14px;
+    font-size: 0.92rem;
+    gap: 6px;
+  }
+
+  @media (max-width: 340px) {
+    font-size: 0.85rem;
+    padding: 12px 8px;
   }
 }
 
@@ -387,6 +459,10 @@ onMounted(() => {
   padding: 2rem;
   height: 100%;
   box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+
+  @media (max-width: 480px) {
+    padding: 1.25rem 1rem;
+  }
 }
 
 .funnel__bullets-title {
@@ -397,6 +473,11 @@ onMounted(() => {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin: 0 0 1.5rem;
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    margin: 0 0 1rem;
+  }
 }
 
 .funnel__bullets {
@@ -415,11 +496,21 @@ onMounted(() => {
     align-items: flex-start;
     gap: 12px;
 
+    @media (max-width: 480px) {
+      font-size: 0.88rem;
+      gap: 8px;
+    }
+
     i {
       color: colors.$S2M-GOLD;
       font-size: 1.2rem;
       margin-top: 3px;
       flex-shrink: 0;
+
+      @media (max-width: 480px) {
+        font-size: 1rem;
+        margin-top: 2px;
+      }
     }
   }
 }

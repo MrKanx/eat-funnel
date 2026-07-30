@@ -3,6 +3,8 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import CalendarModal from '@/components/CalendarModal.vue'
 import { trackStage, generateEventId } from '@/utils/ghl'
 import { useContactStore } from '@/stores/contact'
+import { getStoredFbParams } from '@/utils/fbclid'
+
 
 const contactStore = useContactStore()
 const calendarOpen = ref(false)
@@ -44,6 +46,7 @@ const submitCapture = async () => {
     telefono: c.telefono,
     phone: c.telefono,
     event_id: leadEventId,
+    ...getStoredFbParams(),
   })
   ;(window as any).fbq?.('track', 'Lead', { content_name: 'video-gate' }, { eventID: leadEventId })
   

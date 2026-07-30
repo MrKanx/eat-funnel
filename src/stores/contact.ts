@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { safeLocalStorage } from '@/utils/storage'
 
 export interface BkContact {
   nombre: string
@@ -22,7 +23,7 @@ export const useContactStore = defineStore('contact', () => {
   })
 
   // Hidrata desde localStorage al iniciar
-  const stored = localStorage.getItem(STORAGE_KEY)
+  const stored = safeLocalStorage.getItem(STORAGE_KEY)
   if (stored) {
     try {
       Object.assign(contact.value, JSON.parse(stored))
@@ -31,7 +32,7 @@ export const useContactStore = defineStore('contact', () => {
 
   function save(data: Partial<BkContact>) {
     Object.assign(contact.value, data, { timestamp: Date.now() })
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(contact.value))
+    safeLocalStorage.setItem(STORAGE_KEY, JSON.stringify(contact.value))
   }
 
   function get(): BkContact {
@@ -40,7 +41,7 @@ export const useContactStore = defineStore('contact', () => {
 
   function clear() {
     contact.value = { nombre: '', apellido: '', negocio: '', email: '', telefono: '' }
-    localStorage.removeItem(STORAGE_KEY)
+    safeLocalStorage.removeItem(STORAGE_KEY)
   }
 
   return { contact, save, get, clear }

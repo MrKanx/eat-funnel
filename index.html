@@ -2,17 +2,15 @@
 <html lang="es" prefix="og: https://ogp.me/ns#">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 
     <!-- SEO PRIMARIO -->
     <title>EAT | Corporate Food Flow con Sol Triviño</title>
     <meta name="description" content="Descubre el Método Corporate Food Flow para implementar una alimentación eficiente en tu equipo de trabajo sin arruinar tus presupuestos ni la productividad.">
     <meta name="keywords" content="EAT, alimentación corporativa, catering, productividad, Sol Triviño, Corporate Food Flow">
     <meta name="author" content="EAT">
-    <!-- Wistia Scripts -->
-    <script src="https://fast.wistia.com/player.js"></script>
-    <script src="https://fast.wistia.com/embed/c0iw8b7y8t.js" type="module"></script>
     <style>wistia-player[media-id='c0iw8b7y8t']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/c0iw8b7y8t/swatch'); display: block; filter: blur(5px); padding-top:56.25%; }</style>
+
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="theme-color" content="#0A1628">
     <!-- Favicons -->
@@ -28,7 +26,9 @@
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '%VITE_PIXEL_ID%');
+    var rawPixelId = '%VITE_PIXEL_ID%';
+    var pixelId = (rawPixelId && !rawPixelId.includes('VITE_PIXEL_ID')) ? rawPixelId : '1365301388867066';
+    fbq('init', pixelId);
     fbq('track', 'PageView');
     </script>
     <!-- Canonical -->
@@ -135,15 +135,18 @@
     <!-- PERFORMANCE & RESOURCES -->
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
     <link rel="apple-touch-icon" href="/logo-512.png">
+    <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin>
-    <link rel="preconnect" href="https://fast.wistia.net" crossorigin>
+    <link rel="preconnect" href="https://fast.wistia.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-    <link rel="dns-prefetch" href="https://res.cloudinary.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="dns-prefetch" href="https://connect.facebook.net">
+    <link rel="dns-prefetch" href="https://fast.wistia.com">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
   </head>
   <body>
     <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=%VITE_PIXEL_ID%&ev=PageView&noscript=1"/></noscript>
+    src="https://www.facebook.com/tr?id=1365301388867066&ev=PageView&noscript=1"/></noscript>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
   </body>

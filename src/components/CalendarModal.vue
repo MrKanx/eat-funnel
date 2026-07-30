@@ -4,6 +4,8 @@ import { useRouter } from 'vue-router'
 import { trackStage, generateEventId } from '@/utils/ghl'
 import { useContactStore } from '@/stores/contact'
 import { getStoredFbParams } from '@/utils/fbclid'
+import { safeSessionStorage, safeLocalStorage } from '@/utils/storage'
+
 
 const props = defineProps<{ open: boolean }>()
 const emit = defineEmits<{ (e: 'close'): void }>()
@@ -90,7 +92,7 @@ EAT — Cualificación
 ${califica ? '✅ CALIFICA' : '❌ NO CALIFICA — Falta de personal'}
   `.trim()
 
-  const pageEntry = Number(sessionStorage.getItem('alu_page_entry')) || Date.now()
+  const pageEntry = Number(safeSessionStorage.getItem('alu_page_entry')) || Date.now()
   const pageDuration = Math.floor((Date.now() - pageEntry) / 1000)
   const notasConTiempo = `${notas}\n⏳ Tiempo total en página: ${Math.floor(pageDuration / 60)}m ${pageDuration % 60}s`
 
@@ -142,7 +144,7 @@ ${califica ? '✅ CALIFICA' : '❌ NO CALIFICA — Falta de personal'}
     ;(window as any).fbq?.('track', 'Lead')
     router.push('/agendar')
   } else {
-    if (!IS_DEV) localStorage.setItem('os_disq_at', String(Date.now()))
+    if (!IS_DEV) safeLocalStorage.setItem('os_disq_at', String(Date.now()))
     router.push('/sin-espacio')
   }
 }

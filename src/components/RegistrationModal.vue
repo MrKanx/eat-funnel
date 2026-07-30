@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { parsePhoneNumberFromString, getCountries, getCountryCallingCode, AsYouType } from 'libphonenumber-js'
 import { useRouter } from 'vue-router'
 import { getStoredFbParams } from '@/utils/fbclid'
+import { safeLocalStorage, safeSessionStorage } from '@/utils/storage'
+
 const router = useRouter()
 
 const props = defineProps<{ open: boolean }>()
@@ -131,7 +133,7 @@ const pageEntryTime = ref(Date.now())
 let timerInterval: ReturnType<typeof setInterval>
 
 const startPageTimer = () => {
-  pageEntryTime.value = Number(sessionStorage.getItem('alu_page_entry')) || Date.now()
+  pageEntryTime.value = Number(safeSessionStorage.getItem('alu_page_entry')) || Date.now()
   timerInterval = setInterval(() => {
     pageDuration.value = Math.floor((Date.now() - pageEntryTime.value) / 1000)
   }, 1000)
@@ -243,7 +245,7 @@ const handleSubmit = async () => {
     { eventID: leadEventId }
   )
 
-  localStorage.setItem('os_contact', JSON.stringify({
+  safeLocalStorage.setItem('os_contact', JSON.stringify({
     nombre: form.value.nombre.trim(),
     apellido: form.value.apellido.trim(),
     negocio: form.value.empresa.trim(),
@@ -605,6 +607,11 @@ $accent: colors.$S2M-GOLD;
     color: colors.$QS-DARK;
     outline: none;
     transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+
+    @media (max-width: 768px) {
+      font-size: 16px; /* Previene auto-zoom molesto en iOS Safari */
+    }
+
     &::placeholder { color: #9CA3AF; }
     &:focus { border-color: rgba($accent, 0.5); background: rgba($accent, 0.04); box-shadow: 0 0 0 3px rgba($accent, 0.08); }
   }

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { safeLocalStorage } from '@/utils/storage'
+
 
 const router = useRouter()
 const iframeHeight = ref(1100)
@@ -9,7 +11,7 @@ const BASE_URL = 'https://api.leadconnectorhq.com/widget/booking/ldp9xYyX6UpQ38i
 
 const calendarUrl = computed(() => {
   try {
-    const stored = localStorage.getItem('os_contact')
+    const stored = safeLocalStorage.getItem('os_contact')
     if (!stored) return BASE_URL
     const { nombre, email, phone } = JSON.parse(stored)
     const params = new URLSearchParams()
@@ -25,7 +27,7 @@ const calendarUrl = computed(() => {
 
 const onMessage = (event: MessageEvent) => {
   if (Array.isArray(event.data) && event.data[0] === 'msgsndr-booking-complete') {
-    localStorage.setItem('os_booked_at', String(Date.now()))
+    safeLocalStorage.setItem('os_booked_at', String(Date.now()))
     ;(window as any).fbq?.('track', 'CompleteRegistration', {
       content_name: 'cita-agendada',
       value: 1,
