@@ -3,13 +3,16 @@
 
 html,
 body {
-  background-color: $QS-LIGHT;
+  background-color: #FAF5F6;
+  background-image: radial-gradient(circle at 50% 0%, rgba(251, 113, 133, 0.05) 0%, transparent 70%);
+  background-attachment: fixed;
   margin: 0;
   padding: 0;
   font-family: $font-principal;
   box-sizing: border-box;
   overflow-x: hidden;
   width: 100%;
+  color: $QS-DARK;
   -webkit-text-size-adjust: 100%;
 }
 
@@ -28,13 +31,13 @@ img, video, iframe, svg {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: $QS-LIGHT; 
+  background: #FAF5F6; 
 }
 ::-webkit-scrollbar-thumb {
-  background: $QS-SURFACE;
+  background: #F3E8EA;
   border-radius: 5px;
-  border: 1px solid $QS-LIGHT;
+  border: 1px solid #FAF5F6;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: $QS-GOLD;
+  background: #FB7185;
 }

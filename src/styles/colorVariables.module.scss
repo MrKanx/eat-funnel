@@ -1,10 +1,10 @@
-// EAT Corporate Food Colors (Pastel Theme)
-$EAT-DARK:        #4A4A4A; // Dark Slate Text
-$EAT-ACCENT:      #FFB7B2; // Pastel Peach / Orange
-$EAT-WHITE:       #FFFFFF; // Clarity (Surfaces)
-$EAT-GRAY-LIGHT:  #F9FAFB; // Off-White (Backgrounds)
-$EAT-GRAY-DARK:   #E5E7EB; // Light Borders
-$EAT-PRIMARY:     #B5EAD7; // Pastel Green
+// EAT Corporate Food Colors (Pastel Pink & Obsidian Black Theme)
+$EAT-DARK:        #111827; // Rich Obsidian / Deep Charcoal Text
+$EAT-ACCENT:      #FB7185; // Elegant Pastel Pink / Soft Rose Accent
+$EAT-WHITE:       #FFFFFF; // Pure White Surfaces / Cards
+$EAT-GRAY-LIGHT:  #FAF5F6; // Soft Pearl Blush Background (combina perfecto con letras rosa pastel y negro)
+$EAT-GRAY-DARK:   #F3E8EA; // Subtle Rose-Gray Borders
+$EAT-PRIMARY:     #F472B6; // Primary Pastel Pink
 
 // S2M Aliases for backward compatibility
 $S2M-DARK-BLUE:   $EAT-DARK;
@@ -14,7 +14,7 @@ $S2M-GRAY-LIGHT:  $EAT-GRAY-LIGHT;
 $S2M-GRAY-DARK:   $EAT-GRAY-DARK;
 $S2M-ACCENT:      $EAT-PRIMARY;
 
-// Mapeo a las variables del sistema (manteniendo los nombres para no romper UI legacy de ser necesario)
+// Mapeo a las variables del sistema
 $QS-NAVY:    $EAT-DARK;       // Text/Brand
 $QS-BLUE:    $EAT-PRIMARY;    // Secundario
 $QS-GOLD:    $EAT-ACCENT;     // Acento
@@ -24,15 +24,15 @@ $QS-LIGHT:   $EAT-GRAY-LIGHT; // Fondo principal
 $QS-SURFACE: $EAT-WHITE;      // Superficies/cards claras
 
 // Urgency / inmediatez
-$QS-URGENT:        #B45309; // Amber-700
-$QS-URGENT-DARK:   #78350F; // Amber-900
-$QS-URGENT-LIGHT:  #F59E0B; // Amber-500
-$QS-URGENT-BG:     rgba(#B45309, 0.15);
+$QS-URGENT:        #E11D48; // Deep Rose
+$QS-URGENT-DARK:   #9F1239; // Dark Rose
+$QS-URGENT-LIGHT:  #FB7185; // Light Rose
+$QS-URGENT-BG:     rgba(#E11D48, 0.1);
 
-// Aliases legacy Aluvicopp (mantienen compatibilidad)
+// Aliases legacy Aluvicopp
 $ALU-NAVY:    $QS-NAVY;
 $ALU-BLUE:    $QS-BLUE;
-$ALU-SILVER:  #8E9CB2;
+$ALU-SILVER:  #F3E8EA;
 $ALU-RED:     $QS-RED;
 $ALU-DARK:    $QS-DARK;
 $ALU-LIGHT:   $QS-LIGHT;
@@ -42,19 +42,19 @@ $ALU-URGENT-DARK:   $QS-URGENT-DARK;
 $ALU-URGENT-LIGHT:  $QS-URGENT-LIGHT;
 $ALU-URGENT-BG:     $QS-URGENT-BG;
 
-// Aliases legacy Bakano (mantienen compatibilidad — no usar para código nuevo)
-$BAKANO-PINK:   $QS-NAVY;
+// Aliases legacy Bakano
+$BAKANO-PINK:   $QS-GOLD;
 $BAKANO-DARK:   $QS-DARK;
 $BAKANO-LIGHT:  $QS-LIGHT;
 $BAKANO-PURPLE: $QS-BLUE;
-$BAKANO-GREEN:  #8E9CB2;
-$BAKANO-PRIMARY: $QS-NAVY;
+$BAKANO-GREEN:  #F3E8EA;
+$BAKANO-PRIMARY: $QS-GOLD;
 
-// Aliases legacy Ale Barreto (mantienen compatibilidad)
-$AB-WOOD:     #8E9CB2;
+// Aliases legacy Ale Barreto
+$AB-WOOD:     #F3E8EA;
 $AB-EARTH:    $QS-BLUE;
 $AB-FOREST:   $QS-NAVY;
-$AB-SAGE:     #8E9CB2;
+$AB-SAGE:     #F3E8EA;
 $AB-CREAM:    $QS-LIGHT;
 $AB-WHITE:    #ffffff;
 $AB-URGENT:        $QS-URGENT;
@@ -62,7 +62,7 @@ $AB-URGENT-DARK:   $QS-URGENT-DARK;
 $AB-URGENT-LIGHT:  $QS-URGENT-LIGHT;
 $AB-URGENT-BG:     $QS-URGENT-BG;
 
-// OS Aliases (para mantener compatibilidad con código existente)
+// OS Aliases
 $OS-RED:   $QS-RED;
 $OS-NAVY:  $QS-NAVY;
 $OS-BLUE:  $QS-BLUE;
@@ -70,16 +70,16 @@ $OS-DARK:  $QS-DARK;
 
 // Colores base
 $white: #ffffff;
-$text-light: $EAT-DARK; // Mantenemos el nombre pero invertimos el uso para texto
+$text-light: $EAT-DARK;
 $overlay-wood: rgba($EAT-ACCENT, 0.05);
 
 // Colores adicionales para UI
-$gray-100: #f8f9fa;
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #adb5bd;
-$gray-600: #6c757d;
-$gray-700: #495057;
-$gray-800: #343a40;
-$gray-900: #212529;
+$gray-100: #faf5f6;
+$gray-200: #f3e8ea;
+$gray-300: #e2d1d4;
+$gray-400: #cbd5e1;
+$gray-500: #94a3b8;
+$gray-600: #475569;
+$gray-700: #334155;
+$gray-800: #1e293b;
+$gray-900: #0f172a;

@@ -20,7 +20,7 @@ onMounted(() => {
   safeSessionStorage.setItem('alu_page_entry', String(Date.now()))
   
   // Clean up any other bg
-  document.body.style.backgroundColor = '#F9FAFB'
+  document.body.style.backgroundColor = '#FAF5F6'
 })
 </script>
 
